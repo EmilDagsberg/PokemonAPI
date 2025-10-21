@@ -34,8 +34,8 @@ public class Pokemon {
     */
 
 
-    @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Pokedex> pokedexEntries;
+//    @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<Pokedex> pokedexEntries;
 
     public Pokemon(PokemonDTO pokemonDTO) {
         this.id = pokemonDTO.getId();
