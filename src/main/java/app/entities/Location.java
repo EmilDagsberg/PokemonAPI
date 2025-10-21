@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,5 +24,7 @@ public class Location {
 
     String locationName;
 
-    // TODO: Skal havet lavet en OneToMany relation med pokemon
+
+    @OneToMany(mappedBy = "location")
+    private Set<Pokemon> pokemons;
 }
