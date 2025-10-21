@@ -24,14 +24,14 @@ public class Pokemon {
 
     String type;
 
-
+/*
     // TODO: Ved ikke om den er rigtig endnu
     @ManyToOne
     Location location;
-
-    public Pokemon (PokemonDTO dto){
-        this.id = dto.getId();
-        this.name = dto.getName();
-        this.type = dto.getType();
+*/
+    public Pokemon(PokemonDTO pokemonDTO) {
+        this.id = pokemonDTO.getId();
+        this.name = pokemonDTO.getName();
+        this.type = pokemonDTO.getFirstTypeName();
     }
 }
