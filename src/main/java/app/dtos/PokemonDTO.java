@@ -1,5 +1,6 @@
 package app.dtos;
 
+import app.entities.Pokemon;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,19 @@ public class PokemonDTO {
     private int id;
     private String name;
     private List<TypeSlot> types;
+
+    public PokemonDTO(Pokemon pokemon) {
+        this.id = pokemon.getId();
+        this.name = pokemon.getName();
+
+        TypeInfo typeInfo = new TypeInfo();
+        typeInfo.setName(pokemon.getType());
+
+        TypeSlot typeSlot = new TypeSlot();
+        typeSlot.setType(typeInfo);
+
+        this.types = List.of(typeSlot);
+    }
 
     // Optional helper: get the first type name directly
     public String getFirstTypeName() {
@@ -35,3 +49,4 @@ class TypeSlot {
 class TypeInfo {
     private String name;
 }
+
