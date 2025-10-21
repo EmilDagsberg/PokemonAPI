@@ -1,6 +1,7 @@
 package app.entities;
 
 
+import app.dtos.PokemonDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -23,10 +24,15 @@ public class Pokemon {
 
     String type;
 
-
+/*
     // TODO: Ved ikke om den er rigtig endnu
     @ManyToOne
     Location location;
-
+*/
+    public Pokemon(PokemonDTO pokemonDTO) {
+        this.id = pokemonDTO.getId();
+        this.name = pokemonDTO.getName();
+        this.type = pokemonDTO.getFirstTypeName();
+    }
 
 }
