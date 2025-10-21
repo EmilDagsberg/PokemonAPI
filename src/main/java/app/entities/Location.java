@@ -1,18 +1,18 @@
 package app.entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import app.dtos.LocationDTO;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "location")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,11 +20,32 @@ import java.util.Set;
 public class Location {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
     String locationName;
 
 
-    @OneToMany(mappedBy = "location")
-    private Set<Pokemon> pokemons;
+//    @ManyToMany(mappedBy = "locations")
+//    private Set<Pokemon> pokemons = new HashSet<>();
+
+    public Location(LocationDTO locationDTO) {
+        this.locationName = locationDTO.getLocationArea();
+    }
+
+//    public void addPokemon(Pokemon pokemon) {
+//        if (pokemon != null) {
+//            this.pokemons.add(pokemon);
+//            pokemon.getLocations().add(this);
+//        }
+//    }
+//
+//    public void setPokemons(Set<Pokemon> pokemons) {
+//        this.pokemons.clear();
+//        if (pokemons != null) {
+//            for (Pokemon pokemon : pokemons) {
+//                addPokemon(pokemon);
+//            }
+//        }
+//    }
 }

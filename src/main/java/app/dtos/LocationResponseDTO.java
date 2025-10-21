@@ -1,17 +1,14 @@
 package app.dtos;
 
-import app.entities.Location;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.Data;
+
+import java.util.List;
 
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class LocationDTO {
-    @JsonProperty("name")
-    private String locationArea;
+public class LocationResponseDTO {
+    @JsonProperty("location_area")
+    private List<LocationDTO> results;
 }
-
