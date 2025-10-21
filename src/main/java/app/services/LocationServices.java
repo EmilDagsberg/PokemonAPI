@@ -1,7 +1,6 @@
 package app.services;
 
 import app.dtos.LocationDTO;
-import app.dtos.LocationResponseDTO;
 import app.dtos.PokemonDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,10 +28,10 @@ public class LocationServices {
 
                 if (response.statusCode() == 200) {
                     String json = response.body();
-                    LocationResponseDTO discoverResponse = objectMapper.readValue(json, LocationResponseDTO.class);
+                    List<LocationDTO> discoverResponse = objectMapper.readValue(json, new com.fasterxml.jackson.core.type.TypeReference<List<LocationDTO>>() {});
 
-                    if (discoverResponse.getResults() != null && !discoverResponse.getResults().isEmpty()) {
-                        locationDTOList.addAll(discoverResponse.getResults());
+                    if (discoverResponse != null && !discoverResponse.isEmpty()) {
+                        locationDTOList.addAll(discoverResponse);
                     }
                 } else {
                     System.out.println("Fejl ved læsning af Pokemon-API");

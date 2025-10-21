@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationDTO {
-    @JsonProperty("name")
-    private String locationArea;
+    @JsonProperty("location_area")
+    private LocationAreaDTO locationArea;
 }
 

@@ -30,7 +30,7 @@ public class Location {
 //    private Set<Pokemon> pokemons = new HashSet<>();
 
     public Location(LocationDTO locationDTO) {
-        this.locationName = locationDTO.getLocationArea();
+        this.locationName = locationDTO.getLocationArea().getName();
     }
 
 //    public void addPokemon(Pokemon pokemon) {
