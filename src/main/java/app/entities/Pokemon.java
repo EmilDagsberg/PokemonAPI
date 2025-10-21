@@ -34,5 +34,4 @@ public class Pokemon {
         this.name = pokemonDTO.getName();
         this.type = pokemonDTO.getFirstTypeName();
     }
-
 }
