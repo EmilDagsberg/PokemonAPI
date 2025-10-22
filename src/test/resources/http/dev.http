@@ -1,0 +1,48 @@
+### A simple get request to the test endpoint. No need for login
+GET {{url}}/auth/test/
+
+### Populate the database with some data
+GET {{url}}/pokemon/populate/
+
+### Create Pokemon
+POST {{url}}/pokemon
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+"id": 152,
+"name": "chikorita",
+"types": [
+  {
+    "type": {
+      "name": "grass"
+    }
+  }
+]
+}
+
+
+### Get all pokemon
+GET {{url}}/pokemon
+
+### Get pokemon by id. Change number to id you want
+GET {{url}}/pokemon/151
+
+### Update pokemon by id. Change number to id you want
+PUT {{url}}/pokemon/151
+Content-Type: application/json
+
+{
+  "id": 151,
+  "name": "updated",
+  "types": [
+    {
+      "type": {
+        "name": "grass"
+      }
+    }
+  ]
+}
+
+### Delete pokemon by id. Change number to id you want
+DELETE {{url}}/pokemon/152

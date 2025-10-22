@@ -61,4 +61,10 @@ public class PokemonController {
             ctx.status(HttpStatus.NOT_FOUND).result("Pokemon Not Found");
         }
     }
+
+    public void populate(Context ctx){
+        pokemonDAO.populate();
+        ctx.res().setStatus(200);
+        ctx.json("{ \"message\": \"Database has been populated\" }");
+    }
 }
