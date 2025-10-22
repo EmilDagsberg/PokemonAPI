@@ -7,7 +7,7 @@ public interface IDAO<T, I> {
     T getById(I i);
     List<T> getAll();
     T create(T t);
-    T update(I i, T t);
+    T update(T t);
     boolean delete(I i);
 
 }
