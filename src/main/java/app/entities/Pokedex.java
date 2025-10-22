@@ -15,11 +15,11 @@ public class Pokedex {
     private PokedexId id = new PokedexId();
 
     @ManyToOne
-    @MapsId("username")  // Links to id.userId
+    @MapsId("username")
     private User user;
 
     @ManyToOne
-    @MapsId("pokemonId")  // Links to id.pokemonId
+    @MapsId("pokemonId")
     private Pokemon pokemon;
 
     private boolean onTeam;

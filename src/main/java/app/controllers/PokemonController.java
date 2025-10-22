@@ -31,7 +31,7 @@ public class PokemonController {
 
     }
 
-    // Måske virker den, DAO metoderne er lavet på en anden måde end hvad jeg selv plejer, så har lige prøvet mig frem
+
     public void createPokemon(Context ctx){
         PokemonDTO pokemonDTO = ctx.bodyAsClass(PokemonDTO.class);
         PokemonDTO pokemon = pokemonDAO.create(pokemonDTO);

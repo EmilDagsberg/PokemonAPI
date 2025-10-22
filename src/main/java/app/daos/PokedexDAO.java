@@ -10,19 +10,21 @@ import dk.bugelhartmann.UserDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
-public class PokedexDAO {
+import java.util.List;
+
+public class PokedexDAO implements IDAO <UserDTO, Integer> {
 
     private static EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
 
-    public void addPokemonToPokedex(UserDTO userDTO, PokemonDTO pokemonDTO) {
+    public Pokedex addPokemonToPokedex(UserDTO userDTO, int pokemonId) {
         EntityManager em = emf.createEntityManager();
 
         try {
             em.getTransaction().begin();
 
-            // Get the actual JPA entities from the DB
-            User user = em.find(User.class, userDTO.getUsername()); // Make sure UserDTO includes ID
-            Pokemon pokemon = em.find(Pokemon.class, pokemonDTO.getId());
+
+            User user = em.find(User.class, userDTO.getUsername());
+            Pokemon pokemon = em.find(Pokemon.class, pokemonId);
 
             if (user == null || pokemon == null) {
                 throw new IllegalArgumentException("User or Pokémon not found");
@@ -46,11 +48,38 @@ public class PokedexDAO {
 
             em.persist(pokedex);
             em.getTransaction().commit();
+
+            return pokedex;
         } catch (Exception e) {
             em.getTransaction().rollback();
             throw e;
         } finally {
             em.close();
         }
+    }
+
+    @Override
+    public UserDTO getById(Integer integer) {
+        return null;
+    }
+
+    @Override
+    public List<UserDTO> getAll() {
+        return List.of();
+    }
+
+    @Override
+    public UserDTO create(UserDTO userDTO) {
+        return null;
+    }
+
+    @Override
+    public UserDTO update(UserDTO userDTO) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(Integer integer) {
+        return false;
     }
 }
