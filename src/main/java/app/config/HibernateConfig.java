@@ -3,6 +3,8 @@ package app.config;
 
 import app.entities.Location;
 import app.entities.Pokemon;
+import app.security.entities.Role;
+import app.security.entities.User;
 import app.utils.Utils;
 import jakarta.persistence.EntityManagerFactory;
 import org.hibernate.SessionFactory;
@@ -44,6 +46,8 @@ public class HibernateConfig {
     private static void getAnnotationConfiguration(Configuration configuration) {
         configuration.addAnnotatedClass(Pokemon.class);
         configuration.addAnnotatedClass(Location.class);
+        configuration.addAnnotatedClass(User.class);
+        configuration.addAnnotatedClass(Role.class);
     }
 
     private static EntityManagerFactory createEMF(boolean forTest) {

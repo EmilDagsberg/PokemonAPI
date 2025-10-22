@@ -40,9 +40,9 @@ public class User implements Serializable, ISecurityUser {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Role> roles = new HashSet<>();
 
-    // Pokemon stuff
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Pokedex> pokedexEntries = new HashSet<>();
+//    // Pokemon stuff
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<Pokedex> pokedexEntries = new HashSet<>();
 
 
     public Set<String> getRolesAsStrings() {

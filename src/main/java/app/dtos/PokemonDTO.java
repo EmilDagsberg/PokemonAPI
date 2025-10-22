@@ -2,6 +2,7 @@ package app.dtos;
 
 import app.entities.Location;
 import app.entities.Pokemon;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,7 +38,7 @@ public class PokemonDTO {
                 .toList();
     }
 
-    // Optional helper: get the first type name directly
+    @JsonIgnore
     public String getFirstTypeName() {
         return (types != null && !types.isEmpty())
                 ? types.get(0).getType().getName()
@@ -45,15 +46,4 @@ public class PokemonDTO {
     }
 }
 
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-class TypeSlot {
-    private TypeInfo type;
-}
-
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-class TypeInfo {
-    private String name;
-}
 
