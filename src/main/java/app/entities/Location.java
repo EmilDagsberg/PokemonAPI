@@ -23,11 +23,12 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Column(unique = true)
     String locationName;
 
 
-//    @ManyToMany(mappedBy = "locations")
-//    private Set<Pokemon> pokemons = new HashSet<>();
+    @ManyToMany(mappedBy = "locations")
+    private Set<Pokemon> pokemons = new HashSet<>();
 
     public Location(LocationDTO locationDTO) {
         this.locationName = locationDTO.getLocationArea().getName();

@@ -28,14 +28,14 @@ public class Pokemon {
     String type;
 
 
-    /*@ManyToMany
+    @ManyToMany
     @JoinTable(
             name = "pokemon_location",
             joinColumns = @JoinColumn(name = "pokemon_id"),
             inverseJoinColumns = @JoinColumn(name = "location_id")
     )
     private Set<Location> locations = new HashSet<>();
-*/
+
 
 
 //    @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL, orphanRemoval = true)

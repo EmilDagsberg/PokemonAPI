@@ -2,6 +2,7 @@ package app.services;
 
 import app.dtos.LocationDTO;
 import app.dtos.PokemonDTO;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.URI;
@@ -21,14 +22,14 @@ public class LocationServices {
         try {
             for (PokemonDTO pokemonDTO : pokemonList) {
                 HttpRequest request = HttpRequest.newBuilder()
-                        .uri(new URI("http://pokeapi.co/api/v2/pokemon/" + pokemonDTO.getId() + "/encounters"))
+                        .uri(new URI("https://pokeapi.co/api/v2/pokemon/" + pokemonDTO.getId() + "/encounters"))
                         .build();
 
                 HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
                 if (response.statusCode() == 200) {
                     String json = response.body();
-                    List<LocationDTO> discoverResponse = objectMapper.readValue(json, new com.fasterxml.jackson.core.type.TypeReference<List<LocationDTO>>() {});
+                    List<LocationDTO> discoverResponse = objectMapper.readValue(json, new TypeReference<List<LocationDTO>>() {});
 
                     if (discoverResponse != null && !discoverResponse.isEmpty()) {
                         locationDTOList.addAll(discoverResponse);

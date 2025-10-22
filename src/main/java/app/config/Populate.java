@@ -6,7 +6,9 @@ import app.entities.Location;
 import app.entities.Pokemon;
 import app.services.LocationServices;
 import app.services.PokemonServices;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,15 +34,39 @@ public class Populate {
                 pokemonMap.put(pokemon.getId(), pokemon);
             }
 
-            List<LocationDTO> locationDTOS = locationServices.fetchPokemonLocations(pokemonDTOS);
+            for (PokemonDTO pokemonDTO : pokemonDTOS) {
+                Pokemon pokemon = pokemonMap.get(pokemonDTO.getId());
+                List<LocationDTO> locationDTOs = locationServices.fetchPokemonLocations(List.of(pokemonDTO));
+
+                for (LocationDTO locDTO : locationDTOs) {
+                    String locationName = locDTO.getLocationArea().getName();
 
 
-            for (LocationDTO l: locationDTOS) {
-                Location location = new Location(l);
-                em.persist(location);
+                    Location location = findOrCreateLocation(em, locationName, locDTO);
 
+
+                    pokemon.getLocations().add(location);
+                    location.getPokemons().add(pokemon);
+                }
             }
+
             em.getTransaction().commit();
+            System.out.println("✅ Database populated successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Location findOrCreateLocation(EntityManager em, String name, LocationDTO dto) {
+        try {
+            return em.createQuery(
+                            "SELECT l FROM Location l WHERE l.locationName = :name", Location.class)
+                    .setParameter("name", name)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            Location newLoc = new Location(dto);
+            em.persist(newLoc);
+            return newLoc;
         }
     }
 }
