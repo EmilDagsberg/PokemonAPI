@@ -88,3 +88,8 @@ Authorization: Bearer {{jwt_token}}
 }
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
+
+### Add pokemon to a users pokedex
+POST {{url}}/pokedex/4
+Accept: application/json
+Authorization: Bearer {{jwt_token}}

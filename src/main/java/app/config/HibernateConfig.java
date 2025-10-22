@@ -2,6 +2,7 @@ package app.config;
 
 
 import app.entities.Location;
+import app.entities.Pokedex;
 import app.entities.Pokemon;
 import app.security.entities.Role;
 import app.security.entities.User;
@@ -48,6 +49,7 @@ public class HibernateConfig {
         configuration.addAnnotatedClass(Location.class);
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Role.class);
+        configuration.addAnnotatedClass(Pokedex.class);
     }
 
     private static EntityManagerFactory createEMF(boolean forTest) {
