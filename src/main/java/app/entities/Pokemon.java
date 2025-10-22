@@ -1,5 +1,6 @@
 package app.entities;
 
+import app.dtos.TypeSlot;
 import jakarta.persistence.*;
 import app.dtos.PokemonDTO;
 import jakarta.persistence.Entity;
