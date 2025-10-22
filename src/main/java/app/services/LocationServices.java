@@ -29,7 +29,7 @@ public class LocationServices {
 
                 if (response.statusCode() == 200) {
                     String json = response.body();
-                    List<LocationDTO> discoverResponse = objectMapper.readValue(json, new TypeReference<List<LocationDTO>>() {});
+                    List<LocationDTO> discoverResponse = objectMapper.readValue(json, new TypeReference<>() {});
 
                     if (discoverResponse != null && !discoverResponse.isEmpty()) {
                         locationDTOList.addAll(discoverResponse);

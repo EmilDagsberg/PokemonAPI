@@ -2,10 +2,7 @@ package app.entities;
 
 import app.security.entities.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -14,11 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Pokedex {
 
-    @Id
-    private int id;
+    @EmbeddedId
+    private PokedexId id = new PokedexId();
 
     @ManyToOne
-    @MapsId("userId")
+    @MapsId("username")
     private User user;
 
     @ManyToOne
