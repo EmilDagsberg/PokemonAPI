@@ -39,7 +39,7 @@ public class UserDAO implements IDAO <User, Integer> {
     }
 
     @Override
-    public User update(Integer integer, User user) {
+    public User update(User user) {
         try(EntityManager em = emf.createEntityManager()){
             em.getTransaction().begin();
             em.merge(user);

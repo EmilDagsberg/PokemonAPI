@@ -41,7 +41,7 @@ public class PokemonDAO implements IDAO <PokemonDTO, Integer> {
     }
 
     @Override
-    public PokemonDTO update(Integer integer, PokemonDTO dto) {
+    public PokemonDTO update(PokemonDTO dto) {
         try(EntityManager em = emf.createEntityManager()){
             em.getTransaction().begin();
             Pokemon pokemon = new Pokemon(dto);
