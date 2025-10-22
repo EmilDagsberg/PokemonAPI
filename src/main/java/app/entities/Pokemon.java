@@ -47,22 +47,7 @@ public class Pokemon {
         this.type = pokemonDTO.getFirstTypeName();
     }
 
-//    public void setLocations(Set<Location> locations) {
-//        this.locations.clear();
-//        if (locations != null) {
-//            for (Location location : locations) {
-//                addLocation(location);
-//            }
-//        }
-//    }
-//
-//
-//    public void addLocation(Location location) {
-//        if (location != null) {
-//            this.locations.add(location);
-//            location.getPokemons().add(this);
-//        }
-//    }
+
 
 
 }

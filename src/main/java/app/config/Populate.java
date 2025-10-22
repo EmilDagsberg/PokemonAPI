@@ -51,7 +51,7 @@ public class Populate {
             }
 
             em.getTransaction().commit();
-            System.out.println("✅ Database populated successfully!");
+            System.out.println("Database populated successfully!");
         } catch (Exception e) {
             e.printStackTrace();
         }

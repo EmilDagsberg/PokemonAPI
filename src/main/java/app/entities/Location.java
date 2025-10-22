@@ -34,19 +34,4 @@ public class Location {
         this.locationName = locationDTO.getLocationArea().getName();
     }
 
-//    public void addPokemon(Pokemon pokemon) {
-//        if (pokemon != null) {
-//            this.pokemons.add(pokemon);
-//            pokemon.getLocations().add(this);
-//        }
-//    }
-//
-//    public void setPokemons(Set<Pokemon> pokemons) {
-//        this.pokemons.clear();
-//        if (pokemons != null) {
-//            for (Pokemon pokemon : pokemons) {
-//                addPokemon(pokemon);
-//            }
-//        }
-//    }
 }
