@@ -22,10 +22,10 @@ public class PokemonController {
     public void getPokemonById(Context ctx){
         int id = Integer.parseInt(ctx.pathParam("id"));
         PokemonDTO pokemonDTO = pokemonDAO.getById(id);
-        Pokemon pokemon = new Pokemon(pokemonDTO);
+
         if (pokemonDTO != null) {
-            ctx.json(pokemon);
-        } else  {
+            ctx.json(pokemonDTO);
+        } else {
             ctx.status(HttpStatus.NOT_FOUND).result("Pokemon Not Found");
         }
 

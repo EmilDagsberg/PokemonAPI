@@ -23,8 +23,15 @@ public class PokemonDAO implements IDAO <PokemonDTO, Integer> {
     @Override
     public PokemonDTO getById(Integer integer) {
         try (EntityManager em = emf.createEntityManager()) {
-            Pokemon pokemon = em.find(Pokemon.class, integer);
+            TypedQuery<Pokemon> query = em.createQuery(
+                    "SELECT p FROM Pokemon p LEFT JOIN FETCH p.locations WHERE p.id = :id", Pokemon.class
+            );
+            query.setParameter("id", integer);
+            Pokemon pokemon = query.getSingleResult();
+
             return new PokemonDTO(pokemon);
+        } catch (NoResultException e) {
+            return null;
         }
     }
 
