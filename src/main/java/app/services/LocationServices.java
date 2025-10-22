@@ -1,6 +1,8 @@
 package app.services;
 
+import app.dtos.LocationDTO;
 import app.dtos.PokemonDTO;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.URI;
@@ -10,42 +12,38 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PokemonServices {
-
-    public List<PokemonDTO> fetchFirstGenPokemon() {
-        List<PokemonDTO> pokemonDTOList = new ArrayList<>();
+public class LocationServices {
+    public List<LocationDTO> fetchPokemonLocations(List<PokemonDTO> pokemonList) {
+        List<LocationDTO> locationDTOList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
 
         HttpClient httpClient = HttpClient.newHttpClient();
 
-        int currentId = 1;
-
         try {
-            do {
+            for (PokemonDTO pokemonDTO : pokemonList) {
                 HttpRequest request = HttpRequest.newBuilder()
-                        .uri(new URI("https://pokeapi.co/api/v2/pokemon/" + currentId))
+                        .uri(new URI("https://pokeapi.co/api/v2/pokemon/" + pokemonDTO.getId() + "/encounters"))
                         .build();
 
                 HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
                 if (response.statusCode() == 200) {
                     String json = response.body();
-                    PokemonDTO discoverResponse = objectMapper.readValue(json, PokemonDTO.class);
+                    List<LocationDTO> discoverResponse = objectMapper.readValue(json, new TypeReference<List<LocationDTO>>() {});
 
-                    if (discoverResponse != null) {
-                        pokemonDTOList.add(discoverResponse);
+                    if (discoverResponse != null && !discoverResponse.isEmpty()) {
+                        locationDTOList.addAll(discoverResponse);
                     }
-                    currentId++;
                 } else {
                     System.out.println("Fejl ved læsning af Pokemon-API");
                     System.out.println("Fejl: " + response.body());
                     break;
                 }
-            } while (currentId <= 151);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return pokemonDTOList;
+        return locationDTOList;
     }
-
 }

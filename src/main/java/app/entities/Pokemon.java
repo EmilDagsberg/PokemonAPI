@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,12 +27,15 @@ public class Pokemon {
 
     String type;
 
-/*
-    // TODO: Ved ikke om den er rigtig endnu
-    @ManyToOne
-            @JoinColumn(name = "location_id")
-    Location location;
-    */
+
+    @ManyToMany
+    @JoinTable(
+            name = "pokemon_location",
+            joinColumns = @JoinColumn(name = "pokemon_id"),
+            inverseJoinColumns = @JoinColumn(name = "location_id")
+    )
+    private Set<Location> locations = new HashSet<>();
+
 
 
 //    @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -42,5 +46,8 @@ public class Pokemon {
         this.name = pokemonDTO.getName();
         this.type = pokemonDTO.getFirstTypeName();
     }
+
+
+
 
 }
