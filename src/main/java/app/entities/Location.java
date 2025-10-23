@@ -26,6 +26,9 @@ public class Location {
     @Column(unique = true)
     String locationName;
 
+    public Location(String locationName) {
+        this.locationName = locationName;
+    }
 
     @ManyToMany(mappedBy = "locations")
     private Set<Pokemon> pokemons = new HashSet<>();

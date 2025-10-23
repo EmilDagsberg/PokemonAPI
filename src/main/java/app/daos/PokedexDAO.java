@@ -16,7 +16,18 @@ import java.util.concurrent.ExecutionException;
 
 public class PokedexDAO implements IDAO <PokedexId, Integer> {
 
-    private static EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+    private static PokedexDAO instance;
+    private static EntityManagerFactory emf;
+
+    private PokedexDAO() {}
+
+    public static PokedexDAO getInstance(EntityManagerFactory emf) {
+        if (instance == null) {
+            instance = new PokedexDAO();
+            PokedexDAO.emf = emf;
+        }
+        return instance;
+    }
 
     public Pokedex addPokemonToPokedex(UserDTO userDTO, int pokemonId) {
         EntityManager em = emf.createEntityManager();
