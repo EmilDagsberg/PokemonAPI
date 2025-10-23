@@ -70,6 +70,16 @@ public class PokemonController {
     }
 
 
+    public void getRandomPokemon(Context ctx){
+        List<PokemonDTO> pokemons = pokemonDAO.getAll();
+        if (pokemons == null || pokemons.isEmpty()) {
+            ctx.status(HttpStatus.NOT_FOUND).result("Pokemon Not Found");
+        }
+        Collections.shuffle(pokemons);
+        PokemonDTO randomPokemon = pokemons.get(0);
+        ctx.status(HttpStatus.OK).json(randomPokemon);
+    }
+
     public void getRandomPokemonByType(Context ctx){
         String type = ctx.pathParam("type");
         if (type == null || type.isBlank()) {
