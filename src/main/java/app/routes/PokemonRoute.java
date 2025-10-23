@@ -20,6 +20,7 @@ public class PokemonRoute {
             delete("/{id}", controller::deletePokemon);
             //NON CRUD
             get("/random/{type}", controller::getRandomPokemonByType);
+            get("/type/{type}", controller::getPokemonsByType);
         };
     }
 }
