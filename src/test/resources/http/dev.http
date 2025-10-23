@@ -44,6 +44,9 @@ Content-Type: application/json
   ]
 }
 
+### Get pokemons from specific type
+GET {{url}}/pokemon/type/grass
+
 
 ### Get random Pokemon from specific type
 GET {{url}}/pokemon/random/fire

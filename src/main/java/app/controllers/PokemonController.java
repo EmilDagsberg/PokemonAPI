@@ -89,4 +89,22 @@ public class PokemonController {
 
         ctx.status(200).json(randomPokemon);
     }
+
+    public void getPokemonsByType(Context ctx){
+        String type = ctx.pathParam("type");
+        if (type == null || type.isBlank()) {
+            ctx.status(400).json("Invalid type");
+            return;
+        }
+        PokemonDAO pokemonDAO = new PokemonDAO();
+        List<PokemonDTO> matches = pokemonDAO.getPokemonByType(type);
+
+        if (matches == null) {
+            ctx.status(400).json("No matches found for this type");
+            return;
+        }
+
+        ctx.json(matches).status(200);
+
+    }
 }
