@@ -1,18 +1,21 @@
 package app.controllers;
 
+import app.config.HibernateConfig;
 import app.daos.PokemonDAO;
 import app.dtos.PokemonDTO;
 import app.entities.Pokemon;
 import app.mappers.PokemonMapper;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
+import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PokemonController {
+    private final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
 
-    private final PokemonDAO pokemonDAO = new PokemonDAO();
+    private final PokemonDAO pokemonDAO = PokemonDAO.getInstance(emf);
 
     public void getAllPokemons(Context ctx){
         List<PokemonDTO> pokemonDTOs = pokemonDAO.getAll();
@@ -36,6 +39,8 @@ public class PokemonController {
         PokemonDTO pokemonDTO = ctx.bodyAsClass(PokemonDTO.class);
         PokemonDTO pokemon = pokemonDAO.create(pokemonDTO);
         ctx.status(HttpStatus.CREATED).json(pokemon);
+        ctx.res().setStatus(201);
+
     }
 
     public void updatePokemon(Context ctx){
@@ -49,6 +54,8 @@ public class PokemonController {
         pokemon.setTypes(pokemonDTO.getTypes());
         PokemonDTO updated = pokemonDAO.update(pokemon);
         ctx.status(HttpStatus.CREATED).json(updated);
+        ctx.res().setStatus(200);
+
     }
 
     public void deletePokemon(Context ctx){
@@ -56,6 +63,7 @@ public class PokemonController {
         boolean pokemonDTO = pokemonDAO.delete(id);
         if (pokemonDTO) {
             ctx.json(true);
+            ctx.res().setStatus(204);
         }
         else {
             ctx.status(HttpStatus.NOT_FOUND).result("Pokemon Not Found");

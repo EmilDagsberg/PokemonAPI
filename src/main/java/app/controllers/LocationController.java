@@ -1,15 +1,18 @@
 package app.controllers;
 
+import app.config.HibernateConfig;
 import app.daos.LocationDAO;
 import app.entities.Location;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
+import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
 
 public class LocationController {
+    private final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
 
-    private final LocationDAO locationDAO = new LocationDAO();
+    private final LocationDAO locationDAO = LocationDAO.getInstance(emf);
 
     public void getAllLocations(Context ctx){
         List<Location> locations = locationDAO.getAll();

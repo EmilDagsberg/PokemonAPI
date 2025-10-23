@@ -20,6 +20,8 @@ public class PokemonDTO {
     private List<TypeSlot> types;
     private List<String> locations;
 
+
+
     public PokemonDTO(Pokemon pokemon) {
         this.id = pokemon.getId();
         this.name = pokemon.getName();

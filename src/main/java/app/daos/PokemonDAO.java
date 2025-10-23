@@ -18,7 +18,17 @@ import java.util.Map;
 
 public class PokemonDAO implements IDAO <PokemonDTO, Integer> {
 
-    private static EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+    private static PokemonDAO instance;
+    private static EntityManagerFactory emf;
+
+
+    public static PokemonDAO getInstance(EntityManagerFactory emf) {
+        if (instance == null) {
+            instance = new PokemonDAO();
+            PokemonDAO.emf = emf;
+        }
+        return instance;
+    }
 
     @Override
     public PokemonDTO getById(Integer integer) {
@@ -91,7 +101,7 @@ public class PokemonDAO implements IDAO <PokemonDTO, Integer> {
         }
     }
 
-    public void populate() {
+    public List<PokemonDTO> populate() {
         PokemonServices pokemonServices = new PokemonServices();
         LocationServices locationServices = new LocationServices();
 
@@ -126,9 +136,11 @@ public class PokemonDAO implements IDAO <PokemonDTO, Integer> {
 
             em.getTransaction().commit();
             System.out.println("Database populated successfully!");
+            return pokemonDTOS;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     private static Location findOrCreateLocation(EntityManager em, String name, LocationDTO dto) {

@@ -26,7 +26,7 @@ Authorization: Bearer {{jwt_token}}
 GET {{url}}/pokemon
 
 ### Get pokemon by id. Change number to id you want
-GET {{url}}/pokemon/1
+GET {{url}}/pokemon/150
 
 ### Update pokemon by id. Change number to id you want
 PUT {{url}}/pokemon/151
