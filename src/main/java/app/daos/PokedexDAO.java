@@ -10,6 +10,7 @@ import app.security.entities.User;
 import dk.bugelhartmann.UserDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -111,6 +112,18 @@ public class PokedexDAO implements IDAO <PokedexId, Integer> {
             em.merge(pokedex);
             em.getTransaction().commit();
         }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Pokedex> getPokemonsOnTeam (UserDTO userDTO){
+        EntityManager em = emf.createEntityManager();
+
+        try{
+            TypedQuery query = em.createQuery("SELECT Pokedex FROM Pokedex p WHERE p.onTeam = TRUE", PokemonDTO.class);
+            return query.getResultList();
+        }catch(Exception e){
             e.printStackTrace();
         }
         return null;
