@@ -12,9 +12,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PokemonDAO implements IDAO <PokemonDTO, Integer> {
 
@@ -141,6 +140,28 @@ public class PokemonDAO implements IDAO <PokemonDTO, Integer> {
             Location newLoc = new Location(dto);
             em.persist(newLoc);
             return newLoc;
+        }
+    }
+
+    public List<PokemonDTO> getPokemonByType(String type){
+        if (type == null || type.isEmpty()) {
+            return Collections.emptyList();
+        }
+        try (EntityManager em = emf.createEntityManager()) {
+
+            TypedQuery<Pokemon> query = em.createQuery("SELECT DISTINCT p from Pokemon p " +
+                    "LEFT JOIN FETCH p.locations " +
+                    "WHERE p.type = :type ", Pokemon.class);
+
+            query.setParameter("type", type);
+            List<Pokemon> pokemons = query.getResultList();
+
+            return pokemons.stream()
+                    .map(PokemonDTO::new)
+                    .collect(Collectors.toList());
+
+        } catch (NoResultException e) {
+            return Collections.emptyList();
         }
     }
 }

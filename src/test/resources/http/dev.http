@@ -44,6 +44,11 @@ Content-Type: application/json
   ]
 }
 
+
+### Get random Pokemon from specific type
+GET {{url}}/pokemon/random/fire
+
+
 ### Delete pokemon by id. Change number to id you want
 DELETE {{url}}/pokemon/152
 

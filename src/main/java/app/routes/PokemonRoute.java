@@ -18,6 +18,8 @@ public class PokemonRoute {
             get("/{id}", controller::getPokemonById);
             put("/{id}", controller::updatePokemon);
             delete("/{id}", controller::deletePokemon);
+            //NON CRUD
+            get("/random/{type}", controller::getRandomPokemonByType);
         };
     }
 }
