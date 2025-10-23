@@ -9,7 +9,18 @@ import java.util.List;
 
 public class LocationDAO implements IDAO<Location, Integer>{
 
-    private EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+    private static LocationDAO instance;
+    private static EntityManagerFactory emf;
+
+    private LocationDAO() {}
+
+    public static LocationDAO getInstance(EntityManagerFactory emf) {
+        if(instance == null) {
+            instance = new LocationDAO();
+            LocationDAO.emf = emf;
+        }
+        return instance;
+    }
 
     @Override
     public Location getById(Integer integer) {
