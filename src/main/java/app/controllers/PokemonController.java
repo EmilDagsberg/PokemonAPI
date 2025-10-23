@@ -7,6 +7,7 @@ import app.mappers.PokemonMapper;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,5 +67,26 @@ public class PokemonController {
         pokemonDAO.populate();
         ctx.res().setStatus(200);
         ctx.json("{ \"message\": \"Database has been populated\" }");
+    }
+
+
+    public void getRandomPokemonByType(Context ctx){
+        String type = ctx.pathParam("type");
+        if (type == null || type.isBlank()) {
+            ctx.status(400).json("Invalid type");
+            return;
+        }
+        PokemonDAO pokemonDAO = new PokemonDAO();
+        List<PokemonDTO> matches = pokemonDAO.getPokemonByType(type);
+
+        if (matches == null) {
+            ctx.status(400).json("No matches found for this type");
+            return;
+        }
+
+        Collections.shuffle(matches);
+        PokemonDTO randomPokemon = matches.get(0);
+
+        ctx.status(200).json(randomPokemon);
     }
 }
