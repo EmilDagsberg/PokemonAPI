@@ -5,8 +5,7 @@ import app.entities.Pokedex;
 import app.security.controllers.SecurityController;
 import io.javalin.apibuilder.EndpointGroup;
 
-import static io.javalin.apibuilder.ApiBuilder.before;
-import static io.javalin.apibuilder.ApiBuilder.post;
+import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class PokedexRoute {
 
@@ -18,7 +17,7 @@ public class PokedexRoute {
         return () -> {
             before("/*", securityController.authenticate());
             post("/{id}", controller::addPokemon);
-
+            put("/{id}", controller::addPokemonToTeam);
         };
     }
 

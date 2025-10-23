@@ -5,14 +5,16 @@ import app.dtos.PokemonDTO;
 import app.entities.Pokedex;
 import app.entities.PokedexId;
 import app.entities.Pokemon;
+import app.exceptions.ApiException;
 import app.security.entities.User;
 import dk.bugelhartmann.UserDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-public class PokedexDAO implements IDAO <UserDTO, Integer> {
+public class PokedexDAO implements IDAO <PokedexId, Integer> {
 
     private static PokedexDAO instance;
     private static EntityManagerFactory emf;
@@ -69,23 +71,68 @@ public class PokedexDAO implements IDAO <UserDTO, Integer> {
         }
     }
 
-    @Override
-    public UserDTO getById(Integer integer) {
+    public Pokedex getPokedex (UserDTO userDTO, Integer integer){
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            User user = em.find(User.class, userDTO.getUsername());
+            Pokemon pokemon = em.find(Pokemon.class, integer);
+
+            if (user == null || pokemon == null) {
+                throw new IllegalArgumentException("User or Pokémon not found");
+            }
+
+            PokedexId pokedexId = new PokedexId(user.getUsername(), pokemon.getId());
+
+            Pokedex result = em.find(Pokedex.class, pokedexId);
+
+            if (result != null){
+                return result;
+            }else{
+                throw new IllegalArgumentException("Pokémon is not in users pokedex");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public PokedexId addPokemonToTeam(Pokedex pokedex){
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            Pokedex pokedexToUpdate = em.find(Pokedex.class, pokedex.getId());
+
+            if(pokedexToUpdate != null && pokedexToUpdate.isOnTeam() == false){
+                pokedex.setOnTeam(true);
+            }
+
+            em.getTransaction().begin();
+            em.merge(pokedex);
+            em.getTransaction().commit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
-    public List<UserDTO> getAll() {
+    public PokedexId getById(Integer integer) {
+        return null;
+    }
+
+    @Override
+    public List<PokedexId> getAll() {
         return List.of();
     }
 
     @Override
-    public UserDTO create(UserDTO userDTO) {
+    public PokedexId create(PokedexId pokedexId) {
         return null;
     }
 
     @Override
-    public UserDTO update(UserDTO userDTO) {
+    public PokedexId update(PokedexId pokedexId) {
         return null;
     }
 
