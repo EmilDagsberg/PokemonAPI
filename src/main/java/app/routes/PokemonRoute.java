@@ -1,6 +1,7 @@
 package app.routes;
 
 import app.controllers.PokemonController;
+import app.security.enums.Role;
 import io.javalin.apibuilder.EndpointGroup;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -13,7 +14,7 @@ public class PokemonRoute {
 
         return () -> {
             get("/populate", controller::populate);
-            post("/", controller::createPokemon);
+            post("/", controller::createPokemon, Role.ADMIN);
             get("/", controller::getAllPokemons);
 
             //NON CRUD
@@ -23,8 +24,8 @@ public class PokemonRoute {
             // NON CRUD
 
             get("/{id}", controller::getPokemonById);
-            put("/{id}", controller::updatePokemon);
-            delete("/{id}", controller::deletePokemon);
+            put("/{id}", controller::updatePokemon, Role.ADMIN);
+            delete("/{id}", controller::deletePokemon, Role.ADMIN);
         };
     }
 }
