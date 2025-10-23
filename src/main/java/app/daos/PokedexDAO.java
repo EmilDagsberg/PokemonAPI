@@ -106,6 +106,10 @@ public class PokedexDAO implements IDAO <PokedexId, Integer> {
             if(pokedexToUpdate != null && pokedexToUpdate.isOnTeam() == false){
                 pokedex.setOnTeam(true);
             }
+
+            em.getTransaction().begin();
+            em.merge(pokedex);
+            em.getTransaction().commit();
         }catch (Exception e){
             e.printStackTrace();
         }
