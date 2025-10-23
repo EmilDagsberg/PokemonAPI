@@ -7,7 +7,7 @@ import io.javalin.apibuilder.EndpointGroup;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
-public class PokedexRoute {
+public class  PokedexRoute {
 
     private final PokedexController controller = new PokedexController();
     SecurityController securityController = SecurityController.getInstance();
