@@ -15,12 +15,16 @@ public class PokemonRoute {
             get("/populate", controller::populate);
             post("/", controller::createPokemon);
             get("/", controller::getAllPokemons);
-            get("/{id}", controller::getPokemonById);
-            put("/{id}", controller::updatePokemon);
-            delete("/{id}", controller::deletePokemon);
+
             //NON CRUD
             get("/random/{type}", controller::getRandomPokemonByType);
             get("/type/{type}", controller::getPokemonsByType);
+            get("/random", controller::getRandomPokemon);
+            // NON CRUD
+
+            get("/{id}", controller::getPokemonById);
+            put("/{id}", controller::updatePokemon);
+            delete("/{id}", controller::deletePokemon);
         };
     }
 }
