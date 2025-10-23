@@ -23,7 +23,7 @@ import java.util.Set;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -172,6 +172,35 @@ public class PokemonRoutesTest {
         assertThat(pokemon.length, equalTo(150));
 
     }
+
+    @Test
+    void getPokemonByType_Fire() {
+        PokemonDTO[] firePokemons = given()
+                .when()
+                .get(BASE_URL + "/pokemon/type/fire")
+                .then()
+                .statusCode(200)
+                .extract()
+                .as(PokemonDTO[].class);
+
+        assertThat(firePokemons.length, greaterThan(0));
+
+        for (PokemonDTO p : firePokemons) {
+            assertThat(p.getFirstTypeName(), equalTo("fire"));
+        }
+
+        List<String> expectedFireNames = pokemonList.stream()
+                .filter(p -> "fire".equalsIgnoreCase(p.getFirstTypeName()))
+                .map(PokemonDTO::getName)
+                .toList();
+
+        List<String> actualFireNames = Arrays.stream(firePokemons)
+                .map(PokemonDTO::getName)
+                .toList();
+
+        assertThat(actualFireNames, containsInAnyOrder(expectedFireNames.toArray()));
+    }
+
 
 
 }
