@@ -6,10 +6,12 @@ import app.daos.PokemonDAO;
 import app.dtos.PokemonDTO;
 import app.entities.Pokedex;
 import app.entities.PokedexId;
+import app.entities.Pokemon;
 import dk.bugelhartmann.UserDTO;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.util.List;
 import java.util.Map;
 
 public class PokedexController {
@@ -56,4 +58,25 @@ public class PokedexController {
         ));
     }
 
+    public void getPokemonsOnTeam (Context ctx){
+        UserDTO user = ctx.attribute("user");
+        List<Pokedex> pokedexList = pokedexDAO.getPokemonsOnTeam(user);
+
+        if (user == null) {
+            ctx.status(401).result("Unauthorized");
+            return;
+        }
+
+        List<PokemonDTO> pokemonList = pokedexList.stream().map(Pokedex::getPokemon)
+                .map(pokemon -> new PokemonDTO(
+                        pokemon.getName()
+                ))
+                .toList();
+
+        ctx.status(201).json(Map.of(
+                "msg", "Pokémons on team",
+                "user", user.getUsername(),
+                "pokemon", pokemonList
+        ));
+    }
 }

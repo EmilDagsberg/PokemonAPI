@@ -40,6 +40,10 @@ public class PokemonDTO {
                 .toList();
     }
 
+    public PokemonDTO(String pokemonName){
+        this.name = pokemonName;
+    }
+
     @JsonIgnore
     public String getFirstTypeName() {
         return (types != null && !types.isEmpty())
