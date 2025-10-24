@@ -50,10 +50,10 @@ public class Populator {
     public void cleanUpDb() {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
+            em.createQuery("DELETE FROM Pokedex").executeUpdate();
             em.createQuery("DELETE FROM Pokemon").executeUpdate();
             em.createQuery("DELETE FROM Location").executeUpdate();
             em.createQuery("DELETE FROM User").executeUpdate();
-            em.createQuery("DELETE FROM Pokedex").executeUpdate();
             em.createNativeQuery("ALTER SEQUENCE location_id_seq RESTART WITH 1;").executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
