@@ -14,7 +14,7 @@ public class PokemonRoute {
 
         return () -> {
             get("/populate", controller::populate);
-            post("/", controller::createPokemon, Role.ADMIN);
+            post("/", controller::createPokemon);
             get("/", controller::getAllPokemons);
 
             //NON CRUD
@@ -24,8 +24,8 @@ public class PokemonRoute {
             // NON CRUD
 
             get("/{id}", controller::getPokemonById);
-            put("/{id}", controller::updatePokemon, Role.ADMIN);
-            delete("/{id}", controller::deletePokemon, Role.ADMIN);
+            put("/{id}", controller::updatePokemon);
+            delete("/{id}", controller::deletePokemon);
         };
     }
 }

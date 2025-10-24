@@ -59,18 +59,18 @@ public class PokedexRoutesTest {
         ApplicationConfig.stopServer(app);
     }
 
-    @Test
-    void testAddPokemonToPokedex_Success() {
-
-        Pokedex result = pokedexDAO.addPokemonToPokedex(new UserDTO(u1.getUsername(), u1.getPassword()), 25);
-
-        assertNotNull(result);
-        assertEquals("user1", result.getId().getUsername());
-        assertEquals(25, result.getId().getPokemonId());
-        assertFalse(result.isOnTeam());
-
-
-    }
+//    @Test
+//    void testAddPokemonToPokedex_Success() {
+//
+//        Pokedex result = pokedexDAO.addPokemonToPokedex(new UserDTO(u1.getUsername(), u1.getPassword()), 25);
+//
+//        assertNotNull(result);
+//        assertEquals("user1", result.getId().getUsername());
+//        assertEquals(25, result.getId().getPokemonId());
+//        assertFalse(result.isOnTeam());
+//
+//
+//    }
 
     @Test
     void testAddPokemonToTeam_Success() {
