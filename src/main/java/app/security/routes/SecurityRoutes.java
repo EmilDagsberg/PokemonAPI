@@ -20,7 +20,7 @@ public class SecurityRoutes {
         return ()->{
             path("/auth", ()->{
                 get("/healthcheck", securityController::healthCheck, Role.ANYONE);
-                get("/test", ctx->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from Open Deployment. Also updated")), Role.ANYONE);
+                get("/test", ctx->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from Open Deployment. Watchtower works!")), Role.ANYONE);
                 post("/login", securityController.login(), Role.ANYONE);
                 post("/register", securityController.register(), Role.ANYONE);
                 post("/user/addrole", securityController.addRole(), Role.USER);
