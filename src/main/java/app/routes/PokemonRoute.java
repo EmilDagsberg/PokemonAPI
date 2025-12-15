@@ -13,8 +13,8 @@ public class PokemonRoute {
     protected EndpointGroup getRoutes() {
 
         return () -> {
-            get("/populate", controller::populate);
-            post("/", controller::createPokemon);
+            get("/populate", controller::populate, Role.ADMIN);
+            post("/", controller::createPokemon, Role.ADMIN);
             get("/", controller::getAllPokemons);
 
             //NON CRUD
@@ -24,8 +24,8 @@ public class PokemonRoute {
             // NON CRUD
 
             get("/{id}", controller::getPokemonById);
-            put("/{id}", controller::updatePokemon);
-            delete("/{id}", controller::deletePokemon);
+            put("/{id}", controller::updatePokemon, Role.ADMIN);
+            delete("/{id}", controller::deletePokemon, Role.ADMIN);
         };
     }
 }

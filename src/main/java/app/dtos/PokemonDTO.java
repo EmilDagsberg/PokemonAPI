@@ -15,12 +15,15 @@ import java.util.List;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PokemonDTO {
+
+    private static final String SPRITE_BASE_URL =
+            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+
     private int id;
     private String name;
     private List<TypeSlot> types;
     private List<String> locations;
-
-
+    private String sprite;
 
     public PokemonDTO(Pokemon pokemon) {
         this.id = pokemon.getId();
@@ -38,6 +41,9 @@ public class PokemonDTO {
                 .stream()
                 .map(Location::getLocationName)
                 .toList();
+
+        // Front default sprite (derived from ID)
+        this.sprite = SPRITE_BASE_URL + id + ".png";
     }
 
     @JsonIgnore
@@ -47,5 +53,3 @@ public class PokemonDTO {
                 : null;
     }
 }
-
-
