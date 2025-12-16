@@ -3,14 +3,17 @@ GET {{url}}/auth/test/
 
 ### Populate the database with some data
 GET {{url}}/pokemon/populate/
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
 
 ### Create Pokemon
 POST {{url}}/pokemon
 Content-Type: application/json
+Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-"id": 152,
+"id": 153,
 "name": "chikorita",
 "types": [
   {
@@ -31,6 +34,8 @@ GET {{url}}/pokemon/150
 ### Update pokemon by id. Change number to id you want
 PUT {{url}}/pokemon/151
 Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
 
 {
   "id": 151,
@@ -56,21 +61,23 @@ GET {{url}}/pokemon/random/fire
 
 ### Delete pokemon by id. Change number to id you want
 DELETE {{url}}/pokemon/152
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
 
 ###  Create a new user - this one will only get a USER role by default
 POST {{url}}/auth/register/
 
 {
-    "username": "user2",
-    "password": "test123"
+    "username": "admin",
+    "password": "admin"
 }
 
 ### Login with user. Creates token
 POST {{url}}/auth/login/
 
 {
-    "username": "user2",
-    "password": "test123"
+    "username": "admin",
+    "password": "admin"
 }
 
 > {%

@@ -1,15 +1,8 @@
 package app.entities;
 
-import app.dtos.TypeSlot;
-import jakarta.persistence.*;
 import app.dtos.PokemonDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,13 +14,18 @@ import java.util.Set;
 @AllArgsConstructor
 public class Pokemon {
 
+    private static final String SPRITE_BASE_URL =
+            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+
     @Id
-    int id;
+    private int id;
 
-    String name;
+    private String name;
 
-    String type;
+    private String type;
 
+    @Column(nullable = false)
+    private String sprite;
 
     @ManyToMany
     @JoinTable(
@@ -37,15 +35,18 @@ public class Pokemon {
     )
     private Set<Location> locations = new HashSet<>();
 
-
-
     public Pokemon(PokemonDTO pokemonDTO) {
         this.id = pokemonDTO.getId();
         this.name = pokemonDTO.getName();
         this.type = pokemonDTO.getFirstTypeName();
+        this.sprite = pokemonDTO.getSprite();
     }
 
-
-
-
+    // 🔑 Guarantee sprite before insert
+    @PrePersist
+    public void ensureSprite() {
+        if (this.sprite == null || this.sprite.isBlank()) {
+            this.sprite = SPRITE_BASE_URL + this.id + ".png";
+        }
+    }
 }
