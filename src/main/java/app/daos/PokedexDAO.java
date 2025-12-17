@@ -25,7 +25,7 @@ public class PokedexDAO implements IDAO <PokedexId, Integer> {
 
     private static PokedexDAO instance;
     private static EntityManagerFactory emf;
-    private static PokemonDAO pokemonDAO;
+    private static PokemonDAO pokemonDAO = new PokemonDAO();
 
     private PokedexDAO() {}
 
@@ -130,7 +130,7 @@ public class PokedexDAO implements IDAO <PokedexId, Integer> {
             // Step 1: Get pokedex entries for this user
             TypedQuery<Pokedex> query = em.createQuery(
                     "SELECT pd FROM Pokedex pd " +
-                            "WHERE pd.userUsername = :username",
+                            "WHERE pd.user.username = :username",
                     Pokedex.class);
 
             query.setParameter("username", username);
@@ -141,10 +141,9 @@ public class PokedexDAO implements IDAO <PokedexId, Integer> {
                     .map(pokedexEntry -> {
                         // Get the full Pokemon with locations/types
                         PokemonDTO pokemonDTO = pokemonDAO.getById(pokedexEntry.getPokemon().getId());
-                        Pokemon pokemon = new Pokemon(pokemonDTO);
 
                         // Create DTO with Pokemon data
-                        PokedexEntryDTO dto = new PokedexEntryDTO(pokemon);
+                        PokedexEntryDTO dto = new PokedexEntryDTO(pokemonDTO);
                         dto.setOnTeam(pokedexEntry.isOnTeam()); // Add the onTeam status
 
                         return dto;

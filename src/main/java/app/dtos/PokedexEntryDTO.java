@@ -26,22 +26,13 @@ public class PokedexEntryDTO {
     private String sprite;
     private boolean onTeam;
 
-    public PokedexEntryDTO (Pokemon pokemon) {
+    public PokedexEntryDTO (PokemonDTO pokemon) {
         this.id = pokemon.getId();
         this.name = pokemon.getName();
 
-        TypeInfo typeInfo = new TypeInfo();
-        typeInfo.setName(pokemon.getType());
+        this.types = pokemon.getTypes();
 
-        TypeSlot typeSlot = new TypeSlot();
-        typeSlot.setType(typeInfo);
-
-        this.types = List.of(typeSlot);
-
-        this.locations = pokemon.getLocations()
-                .stream()
-                .map(Location::getLocationName)
-                .toList();
+        this.locations = pokemon.getLocations();
 
         // Front default sprite (derived from ID)
         this.sprite = SPRITE_BASE_URL + id + ".png";
