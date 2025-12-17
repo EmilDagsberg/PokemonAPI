@@ -3,6 +3,7 @@ package app.controllers;
 import app.config.HibernateConfig;
 import app.daos.PokedexDAO;
 import app.daos.PokemonDAO;
+import app.dtos.PokedexEntryDTO;
 import app.dtos.PokemonDTO;
 import app.entities.Pokedex;
 import app.entities.PokedexId;
@@ -10,6 +11,7 @@ import dk.bugelhartmann.UserDTO;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.util.List;
 import java.util.Map;
 
 public class PokedexController {
@@ -54,6 +56,19 @@ public class PokedexController {
                 "user", user.getUsername(),
                 "pokemon", pokedex.getPokemon().getName()
         ));
+    }
+
+    public void getPokedexByUser (Context ctx){
+        UserDTO user = ctx.attribute("user");
+
+        if (user == null) {
+            ctx.status(401).result("Unauthorized");
+            return;
+        }
+
+        List<PokedexEntryDTO> pokedexEntries = pokedexDAO.getUserPokedex(user.getUsername());
+
+        ctx.json(pokedexEntries);
     }
 
 }

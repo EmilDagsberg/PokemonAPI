@@ -1,6 +1,7 @@
 package app.daos;
 
 import app.config.HibernateConfig;
+import app.dtos.PokedexEntryDTO;
 import app.dtos.PokemonDTO;
 import app.entities.Pokedex;
 import app.entities.PokedexId;
@@ -10,14 +11,21 @@ import app.security.entities.User;
 import dk.bugelhartmann.UserDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class PokedexDAO implements IDAO <PokedexId, Integer> {
 
     private static PokedexDAO instance;
     private static EntityManagerFactory emf;
+    private static PokemonDAO pokemonDAO;
 
     private PokedexDAO() {}
 
@@ -114,6 +122,38 @@ public class PokedexDAO implements IDAO <PokedexId, Integer> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<PokedexEntryDTO> getUserPokedex(String username) {
+        try (EntityManager em = emf.createEntityManager()) {
+
+            // Step 1: Get pokedex entries for this user
+            TypedQuery<Pokedex> query = em.createQuery(
+                    "SELECT pd FROM Pokedex pd " +
+                            "WHERE pd.userUsername = :username",
+                    Pokedex.class);
+
+            query.setParameter("username", username);
+            List<Pokedex> pokedexEntries = query.getResultList();
+
+            // Step 2: For each entry, get the full Pokemon and create DTO
+            return pokedexEntries.stream()
+                    .map(pokedexEntry -> {
+                        // Get the full Pokemon with locations/types
+                        PokemonDTO pokemonDTO = pokemonDAO.getById(pokedexEntry.getPokemon().getId());
+                        Pokemon pokemon = new Pokemon(pokemonDTO);
+
+                        // Create DTO with Pokemon data
+                        PokedexEntryDTO dto = new PokedexEntryDTO(pokemon);
+                        dto.setOnTeam(pokedexEntry.isOnTeam()); // Add the onTeam status
+
+                        return dto;
+                    })
+                    .collect(Collectors.toList());
+
+        } catch (NoResultException e) {
+            return Collections.emptyList();
+        }
     }
 
     @Override
