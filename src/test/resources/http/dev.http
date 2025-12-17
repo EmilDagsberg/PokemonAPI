@@ -72,23 +72,6 @@ POST {{url}}/auth/register/
     "password": "admin"
 }
 
-### Create a new user for testing with USER role
-###  Create a new user - this one will only get a USER role by default
-POST {{url}}/auth/register/
-
-{
-    "username": "userTest",
-    "password": "user"
-}
-
-### Login with test user. Creates token
-POST {{url}}/auth/login/
-
-{
-    "username": "userTest",
-    "password": "user"
-}
-
 ### Login with admin user. Creates token
 POST {{url}}/auth/login/
 
