@@ -21,6 +21,7 @@ public class PokemonDAO implements IDAO <PokemonDTO, Integer> {
     private static EntityManagerFactory emf;
 
 
+
     public static PokemonDAO getInstance(EntityManagerFactory emf) {
         if (instance == null) {
             instance = new PokemonDAO();

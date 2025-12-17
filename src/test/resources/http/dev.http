@@ -72,7 +72,7 @@ POST {{url}}/auth/register/
     "password": "admin"
 }
 
-### Login with user. Creates token
+### Login with admin user. Creates token
 POST {{url}}/auth/login/
 
 {
@@ -113,5 +113,10 @@ Authorization: Bearer {{jwt_token}}
 
 ### Add pokemon 151 to users team
 PUT {{url}}/pokedex/151
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### Get all pokemon from a users pokedex
+GET {{url}}/pokedex/
 Accept: application/json
 Authorization: Bearer {{jwt_token}}

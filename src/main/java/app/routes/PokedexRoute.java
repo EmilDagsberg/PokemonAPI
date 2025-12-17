@@ -19,6 +19,7 @@ public class  PokedexRoute {
             before("/*", securityController.authenticate());
             post("/{id}", controller::addPokemon,  Role.USER);
             put("/{id}", controller::addPokemonToTeam, Role.USER);
+            get("/", controller::getPokedexByUser, Role.USER);
         };
     }
 

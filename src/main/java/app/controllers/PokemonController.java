@@ -39,8 +39,8 @@ public class PokemonController {
     public void createPokemon(Context ctx){
         PokemonDTO pokemonDTO = ctx.bodyAsClass(PokemonDTO.class);
         PokemonDTO pokemon = pokemonDAO.create(pokemonDTO);
-        ctx.status(HttpStatus.CREATED).json(pokemon);
-        ctx.res().setStatus(201);
+            ctx.status(HttpStatus.CREATED).json(pokemon);
+            ctx.res().setStatus(201);
 
     }
 
